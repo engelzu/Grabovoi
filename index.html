@@ -1,73 +1,264 @@
-button {
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Números de Grabovoi - Frequência</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.container {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 40px 30px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    max-width: 500px;
+    width: 100%;
+}
+
+h1 {
+    font-size: 32px;
+    margin-bottom: 10px;
+    background: linear-gradient(135deg, #fff, #f0f0f0);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: bold;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+p {
+    font-size: 15px;
+    opacity: 0.9;
+    margin-bottom: 30px;
+    color: #fff;
+}
+
+select {
+    width: 100%;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    border-radius: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.15);
+    color: #fff;
+    backdrop-filter: blur(5px);
     cursor: pointer;
-    background: #6c63ff;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+select:hover {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: rgba(255, 255, 255, 0.5);
+    transform: translateY(-2px);
+}
+
+select:focus {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+}
+
+select option {
+    background: #764ba2;
+    color: #fff;
+    padding: 10px;
+}
+
+.button-group {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+button {
+    flex: 1;
+    padding: 16px;
+    font-size: 18px;
+    border-radius: 20px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    position: relative;
+    overflow: hidden;
+}
+
+button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::before {
+    width: 300px;
+    height: 300px;
+}
+
+#play {
+    background: linear-gradient(135deg, #667eea, #764ba2);
     color: white;
 }
 
+#play:hover {
+    background: linear-gradient(135deg, #7c8ff5, #8b5bc2);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+}
+
+#stop {
+    background: linear-gradient(135deg, #f093fb, #f5576c);
+    color: white;
+}
+
+#stop:hover {
+    background: linear-gradient(135deg, #f5a3ff, #ff6b7f);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(240, 147, 251, 0.4);
+}
+
 button:active {
-    transform: scale(0.98);
+    transform: translateY(-1px);
 }
 
 .info {
-    margin-top: 15px;
-    font-size: 18px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.1));
+    border-radius: 20px;
+    padding: 20px;
+    font-size: 22px;
+    font-weight: bold;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    backdrop-filter: blur(5px);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+.freq-value {
+    background: linear-gradient(135deg, #ffd89b, #19547b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-size: 26px;
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 30px 20px;
+    }
+    
+    h1 {
+        font-size: 26px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+}
+
+/* Animação de entrada */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.container {
+    animation: fadeInUp 0.6s ease;
 }
 </style>
 </head>
 
 <body>
 
-<h1>Números de Grabovoi</h1>
-<p>Selecione um número e toque a frequência</p>
+<div class="container">
+    <h1>✨ Números de Grabovoi</h1>
+    <p>Selecione um número e toque a frequência vibracional</p>
 
-<select id="numero">
-  <!-- SAÚDE -->
-  <option value="5197148">5197148 – Cura Física Geral</option>
-  <option value="4812412">4812412 – Saúde Perfeita</option>
-  <option value="9187948181">9187948181 – Regeneração do Corpo</option>
-  <option value="1884321">1884321 – Sistema Imunológico</option>
-  <option value="7774991">7774991 – Cura Emocional</option>
-  <option value="4897132">4897132 – Coluna e Ossos</option>
-  <option value="112521">112521 – Células Saudáveis</option>
-  <option value="421387">421387 – Equilíbrio Mental</option>
+    <select id="numero">
+      <!-- SAÚDE -->
+      <option value="5197148">🏥 5197148 – Cura Física Geral</option>
+      <option value="4812412">💚 4812412 – Saúde Perfeita</option>
+      <option value="9187948181">🔄 9187948181 – Regeneração do Corpo</option>
+      <option value="1884321">🛡️ 1884321 – Sistema Imunológico</option>
+      <option value="7774991">💙 7774991 – Cura Emocional</option>
+      <option value="4897132">🦴 4897132 – Coluna e Ossos</option>
+      <option value="112521">🧬 112521 – Células Saudáveis</option>
+      <option value="421387">🧠 421387 – Equilíbrio Mental</option>
 
-  <!-- AMOR -->
-  <option value="7753191">7753191 – Amor Verdadeiro</option>
-  <option value="8884121289018">8884121289018 – Harmonia no Relacionamento</option>
-  <option value="4570003">4570003 – Casamento Feliz</option>
-  <option value="771">771 – Atração Amorosa</option>
-  <option value="33619">33619 – Paz no Amor</option>
-  <option value="918273">918273 – União Espiritual</option>
+      <!-- AMOR -->
+      <option value="7753191">❤️ 7753191 – Amor Verdadeiro</option>
+      <option value="8884121289018">💞 8884121289018 – Harmonia no Relacionamento</option>
+      <option value="4570003">💑 4570003 – Casamento Feliz</option>
+      <option value="771">💘 771 – Atração Amorosa</option>
+      <option value="33619">🕊️ 33619 – Paz no Amor</option>
+      <option value="918273">💫 918273 – União Espiritual</option>
 
-  <!-- DINHEIRO -->
-  <option value="71427321893">71427321893 – Dinheiro Inesperado</option>
-  <option value="5207418">5207418 – Prosperidade Financeira</option>
-  <option value="741">741 – Fluxo Financeiro</option>
-  <option value="318798">318798 – Abundância Constante</option>
-  <option value="987654">987654 – Pagamento de Dívidas</option>
-  <option value="421741">421741 – Estabilidade Financeira</option>
+      <!-- DINHEIRO -->
+      <option value="71427321893">💰 71427321893 – Dinheiro Inesperado</option>
+      <option value="5207418">💵 5207418 – Prosperidade Financeira</option>
+      <option value="741">🌊 741 – Fluxo Financeiro</option>
+      <option value="318798">🌟 318798 – Abundância Constante</option>
+      <option value="987654">💳 987654 – Pagamento de Dívidas</option>
+      <option value="421741">📈 421741 – Estabilidade Financeira</option>
 
-  <!-- ESPIRITUAL -->
-  <option value="333">333 – Proteção Espiritual</option>
-  <option value="9999999">9999999 – Consciência Elevada</option>
-  <option value="1234321">1234321 – Clareza Mental</option>
-  <option value="5555555">5555555 – Transformação Positiva</option>
-  <option value="1010101">1010101 – Conexão Divina</option>
-  <option value="7777777">7777777 – Sabedoria Interior</option>
+      <!-- ESPIRITUAL -->
+      <option value="333">🛡️ 333 – Proteção Espiritual</option>
+      <option value="9999999">🌌 9999999 – Consciência Elevada</option>
+      <option value="1234321">🔮 1234321 – Clareza Mental</option>
+      <option value="5555555">⚡ 5555555 – Transformação Positiva</option>
+      <option value="1010101">✨ 1010101 – Conexão Divina</option>
+      <option value="7777777">📿 7777777 – Sabedoria Interior</option>
 
-  <!-- VIDA / SUCESSO -->
-  <option value="918">918 – Proteção da Casa</option>
-  <option value="888">888 – Sucesso Geral</option>
-  <option value="2020202">2020202 – Caminhos Abertos</option>
-  <option value="4444444">4444444 – Segurança</option>
-  <option value="314159">314159 – Ordem e Harmonia</option>
-  <option value="616161">616161 – Sorte e Oportunidades</option>
-</select>
+      <!-- VIDA / SUCESSO -->
+      <option value="918">🏡 918 – Proteção da Casa</option>
+      <option value="888">🏆 888 – Sucesso Geral</option>
+      <option value="2020202">🚀 2020202 – Caminhos Abertos</option>
+      <option value="4444444">🔐 4444444 – Segurança</option>
+      <option value="314159">⚖️ 314159 – Ordem e Harmonia</option>
+      <option value="616161">🍀 616161 – Sorte e Oportunidades</option>
+    </select>
 
-<button id="play">▶ Tocar</button>
-<button id="stop">⏹ Parar</button>
+    <div class="button-group">
+        <button id="play">▶ Tocar</button>
+        <button id="stop">⏹ Parar</button>
+    </div>
 
-<div class="info" id="freq">Frequência: -- Hz</div>
+    <div class="info">
+        <div id="freq">Frequência: <span class="freq-value">-- Hz</span></div>
+    </div>
+</div>
 
 <script>
 let ctx = null;
@@ -98,8 +289,8 @@ document.getElementById("play").onclick = function () {
     const freq = calcularFrequencia(numero);
 
     osc.frequency.setValueAtTime(freq, ctx.currentTime);
-    document.getElementById("freq").innerText =
-        "Frequência: " + freq + " Hz";
+    document.getElementById("freq").innerHTML =
+        'Frequência: <span class="freq-value">' + freq + " Hz</span>";
 };
 
 document.getElementById("stop").onclick = function () {
@@ -112,8 +303,8 @@ document.getElementById("stop").onclick = function () {
         ctx.close();
         ctx = null;
     }
-    document.getElementById("freq").innerText =
-        "Frequência: -- Hz";
+    document.getElementById("freq").innerHTML =
+        'Frequência: <span class="freq-value">-- Hz</span>';
 };
 </script>
 
