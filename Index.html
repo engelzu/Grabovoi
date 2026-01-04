@@ -1,0 +1,157 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Números de Grabovoi - Frequência</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #1e1e2f, #3a3a6a);
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+h1 {
+    margin-bottom: 5px;
+}
+
+p {
+    font-size: 14px;
+    opacity: 0.9;
+}
+
+select, button {
+    width: 90%;
+    max-width: 400px;
+    padding: 12px;
+    margin: 8px 0;
+    font-size: 16px;
+    border-radius: 10px;
+    border: none;
+}
+
+button {
+    cursor: pointer;
+    background: #6c63ff;
+    color: white;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+.info {
+    margin-top: 15px;
+    font-size: 18px;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Números de Grabovoi</h1>
+<p>Selecione um número e toque a frequência</p>
+
+<select id="numero">
+  <!-- SAÚDE -->
+  <option value="5197148">5197148 – Cura Física Geral</option>
+  <option value="4812412">4812412 – Saúde Perfeita</option>
+  <option value="9187948181">9187948181 – Regeneração do Corpo</option>
+  <option value="1884321">1884321 – Sistema Imunológico</option>
+  <option value="7774991">7774991 – Cura Emocional</option>
+  <option value="4897132">4897132 – Coluna e Ossos</option>
+  <option value="112521">112521 – Células Saudáveis</option>
+  <option value="421387">421387 – Equilíbrio Mental</option>
+
+  <!-- AMOR -->
+  <option value="7753191">7753191 – Amor Verdadeiro</option>
+  <option value="8884121289018">8884121289018 – Harmonia no Relacionamento</option>
+  <option value="4570003">4570003 – Casamento Feliz</option>
+  <option value="771">771 – Atração Amorosa</option>
+  <option value="33619">33619 – Paz no Amor</option>
+  <option value="918273">918273 – União Espiritual</option>
+
+  <!-- DINHEIRO -->
+  <option value="71427321893">71427321893 – Dinheiro Inesperado</option>
+  <option value="5207418">5207418 – Prosperidade Financeira</option>
+  <option value="741">741 – Fluxo Financeiro</option>
+  <option value="318798">318798 – Abundância Constante</option>
+  <option value="987654">987654 – Pagamento de Dívidas</option>
+  <option value="421741">421741 – Estabilidade Financeira</option>
+
+  <!-- ESPIRITUAL -->
+  <option value="333">333 – Proteção Espiritual</option>
+  <option value="9999999">9999999 – Consciência Elevada</option>
+  <option value="1234321">1234321 – Clareza Mental</option>
+  <option value="5555555">5555555 – Transformação Positiva</option>
+  <option value="1010101">1010101 – Conexão Divina</option>
+  <option value="7777777">7777777 – Sabedoria Interior</option>
+
+  <!-- VIDA / SUCESSO -->
+  <option value="918">918 – Proteção da Casa</option>
+  <option value="888">888 – Sucesso Geral</option>
+  <option value="2020202">2020202 – Caminhos Abertos</option>
+  <option value="4444444">4444444 – Segurança</option>
+  <option value="314159">314159 – Ordem e Harmonia</option>
+  <option value="616161">616161 – Sorte e Oportunidades</option>
+</select>
+
+<button id="play">▶ Tocar</button>
+<button id="stop">⏹ Parar</button>
+
+<div class="info" id="freq">Frequência: -- Hz</div>
+
+<script>
+let ctx = null;
+let osc = null;
+
+// Escala Solfeggio
+const solfeggio = [174, 285, 396, 417, 528, 639, 741, 852, 963];
+
+function calcularFrequencia(numero) {
+    let soma = 0;
+    for (let i = 0; i < numero.length; i++) {
+        soma += parseInt(numero[i]);
+    }
+    let index = soma % solfeggio.length;
+    return solfeggio[index];
+}
+
+document.getElementById("play").onclick = function () {
+    if (!ctx) {
+        ctx = new (window.AudioContext || window.webkitAudioContext)();
+        osc = ctx.createOscillator();
+        osc.type = "sine";
+        osc.connect(ctx.destination);
+        osc.start();
+    }
+
+    const numero = document.getElementById("numero").value;
+    const freq = calcularFrequencia(numero);
+
+    osc.frequency.setValueAtTime(freq, ctx.currentTime);
+    document.getElementById("freq").innerText =
+        "Frequência: " + freq + " Hz";
+};
+
+document.getElementById("stop").onclick = function () {
+    if (osc) {
+        osc.stop();
+        osc.disconnect();
+        osc = null;
+    }
+    if (ctx) {
+        ctx.close();
+        ctx = null;
+    }
+    document.getElementById("freq").innerText =
+        "Frequência: -- Hz";
+};
+</script>
+
+</body>
+</html>
